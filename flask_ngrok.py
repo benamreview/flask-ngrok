@@ -20,7 +20,7 @@ def _get_command():
     elif system == "Windows":
         command = "ngrok.exe"
     elif system == "Linux":
-        command = "ngrok http -hostname=nsfscc.ngrok.io 80"
+        command = "ngrok"
     else:
         raise Exception("{system} is not supported".format(system=system))
 def _run_ngrok(port):
@@ -30,7 +30,9 @@ def _run_ngrok(port):
     executable = str(Path(ngrok_path, command))
     print(executable)
     os.chmod(executable, 0o777)
+    # ngrok = subprocess.Popen([executable, 'http -hostname=nsfscc.ngrok.io 80', str(port)])
     ngrok = subprocess.Popen([executable, 'http', str(port)])
+
     atexit.register(ngrok.terminate)
     localhost_url = "http://localhost:4040/api/tunnels"  # Url with tunnel details
     time.sleep(1)
