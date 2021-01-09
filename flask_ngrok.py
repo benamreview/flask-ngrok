@@ -21,28 +21,14 @@ def _get_command():
         command = "ngrok.exe"
     elif system == "Linux":
         command = "http -hostname=nsfscc.ngrok.io 80"
-from flask_ngrok import run_with_ngrok
-
-app = Flask(__name__)
-run_with_ngrok(app)  # Start ngrok when app is run
-
-@app.route("/")
-def hello():
-    return "Hello World!"
-
-if __name__ == '__main__':
-    app.run()
     else:
         raise Exception("{system} is not supported".format(system=system))
-    return command
-
-
 def _run_ngrok(port):
     command = _get_command()
     ngrok_path = str(Path(tempfile.gettempdir(), "ngrok"))
     _download_ngrok(ngrok_path)
     executable = str(Path(ngrok_path, command))
-    print(executable)
+    # print(executable)
     os.chmod(executable, 0o777)
     ngrok = subprocess.Popen([executable, 'http', str(port)])
     atexit.register(ngrok.terminate)
