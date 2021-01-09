@@ -31,7 +31,7 @@ def hello():
     return "Hello World!"
 
 if __name__ == '__main__':
-    app.run()"
+    app.run()
     else:
         raise Exception("{system} is not supported".format(system=system))
     return command
@@ -52,7 +52,7 @@ def _run_ngrok(port):
     j = json.loads(tunnel_url)
 
     tunnel_url = j['tunnels'][0]['public_url']  # Do the parsing of the get
-    print(j)
+    # print(j)
     
     tunnel_url = tunnel_url.replace("https", "http")
     return tunnel_url
