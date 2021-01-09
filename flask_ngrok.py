@@ -20,7 +20,7 @@ def _get_command():
     elif system == "Windows":
         command = "ngrok.exe"
     elif system == "Linux":
-        command = "http -hostname=nsfscc.ngrok.io 80"
+        command = "ngrok http -hostname=nsfscc.ngrok.io 80"
     else:
         raise Exception("{system} is not supported".format(system=system))
 def _run_ngrok(port):
@@ -28,7 +28,7 @@ def _run_ngrok(port):
     ngrok_path = str(Path(tempfile.gettempdir(), "ngrok"))
     _download_ngrok(ngrok_path)
     executable = str(Path(ngrok_path, command))
-    # print(executable)
+    print(executable)
     os.chmod(executable, 0o777)
     ngrok = subprocess.Popen([executable, 'http', str(port)])
     atexit.register(ngrok.terminate)
