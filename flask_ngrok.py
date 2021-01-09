@@ -31,6 +31,7 @@ def _run_ngrok(port):
     ngrok_path = str(Path(tempfile.gettempdir(), "ngrok"))
     _download_ngrok(ngrok_path)
     executable = str(Path(ngrok_path, command))
+    print(executable)
     os.chmod(executable, 0o777)
     ngrok = subprocess.Popen([executable, 'http', str(port)])
     atexit.register(ngrok.terminate)
@@ -40,10 +41,12 @@ def _run_ngrok(port):
     j = json.loads(tunnel_url)
 
     tunnel_url = j['tunnels'][0]['public_url']  # Do the parsing of the get
+    print(j)
+    
     tunnel_url = tunnel_url.replace("https", "http")
     return tunnel_url
 
-
+#ngrok http -hostname=nsfscc.ngrok.io 80
 def _download_ngrok(ngrok_path):
     if Path(ngrok_path).exists():
         return
