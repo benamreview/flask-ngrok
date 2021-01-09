@@ -32,7 +32,9 @@ def _run_ngrok(port):
     _download_ngrok(ngrok_path)
     executable = str(Path(ngrok_path, command))
     os.chmod(executable, 0o777)
-    ngrok = subprocess.Popen([executable, 'http', str(port)])
+    # ngrok = subprocess.Popen([executable, 'http', str(port)])
+    ngrok = subprocess.Popen([executable, 'http', '-hostname=nsfscc.ngrok.io', str(80)])
+
     atexit.register(ngrok.terminate)
     localhost_url = "http://localhost:4040/api/tunnels"  # Url with tunnel details
     time.sleep(1)
