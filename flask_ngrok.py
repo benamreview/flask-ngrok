@@ -23,16 +23,16 @@ def _get_command():
         command = "ngrok"
     else:
         raise Exception("{system} is not supported".format(system=system))
+    return command
+
+
 def _run_ngrok(port):
     command = _get_command()
     ngrok_path = str(Path(tempfile.gettempdir(), "ngrok"))
     _download_ngrok(ngrok_path)
     executable = str(Path(ngrok_path, command))
-    print(executable)
     os.chmod(executable, 0o777)
-    # ngrok = subprocess.Popen([executable, 'http -hostname=nsfscc.ngrok.io 80', str(port)])
     ngrok = subprocess.Popen([executable, 'http', str(port)])
-
     atexit.register(ngrok.terminate)
     localhost_url = "http://localhost:4040/api/tunnels"  # Url with tunnel details
     time.sleep(1)
@@ -40,12 +40,10 @@ def _run_ngrok(port):
     j = json.loads(tunnel_url)
 
     tunnel_url = j['tunnels'][0]['public_url']  # Do the parsing of the get
-    # print(j)
-    
     tunnel_url = tunnel_url.replace("https", "http")
     return tunnel_url
 
-#ngrok http -hostname=nsfscc.ngrok.io 80
+
 def _download_ngrok(ngrok_path):
     if Path(ngrok_path).exists():
         return
