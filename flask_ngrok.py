@@ -33,7 +33,7 @@ def _run_ngrok(port):
     executable = str(Path(ngrok_path, command))
     os.chmod(executable, 0o777)
     # ngrok = subprocess.Popen([executable, 'http', str(port)])
-    subprocess.Popen([executable, 'authtoken 1feVjmgwS638DCvRFv4O5nZuBFO_6PwTRSUPb1ou5PUdYWLdp'])
+    subprocess.Popen([executable, 'authtoken', '1feVjmgwS638DCvRFv4O5nZuBFO_6PwTRSUPb1ou5PUdYWLdp'])
 
     ngrok = subprocess.Popen([executable, 'http', '-hostname=nsfscc.ngrok.io', str(port)])
 
