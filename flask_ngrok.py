@@ -35,7 +35,7 @@ def _run_ngrok(port):
     # ngrok = subprocess.Popen([executable, 'http', str(port)])
     subprocess.Popen([executable, 'authtoken', '1feVjmgwS638DCvRFv4O5nZuBFO_6PwTRSUPb1ou5PUdYWLdp'])
 
-    ngrok = subprocess.Popen([executable, 'http', '-region=us -hostname=nsfscc-bert.ngrok.io', str(port)])
+    ngrok = subprocess.Popen([executable, 'http', '-hostname=nsfscc-bert.ngrok.io', str(port)])
 
     atexit.register(ngrok.terminate)
     localhost_url = "http://localhost:4040/api/tunnels"  # Url with tunnel details
